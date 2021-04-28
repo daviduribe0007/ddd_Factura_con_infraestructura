@@ -8,8 +8,8 @@ public class Fecha implements ValueObject<String> {
 
     private final String value;
 
-    public Fecha(String nombre) {
-        this.value = Objects.requireNonNull(nombre);
+    public Fecha(String fecha) {
+        this.value = Objects.requireNonNull(fecha);
     }
 
     @Override
