@@ -16,7 +16,7 @@ public class FacturaChange extends EventChange {
             factura.productos = new HashMap<>();
             factura.subtotal = new Dinero(0);
             factura.iva = new Iva(0.1f);
-            factura.propina = new Dinero(0)
+            factura.propina = new Dinero(0);
             factura.total = new Dinero(0);
         });
     }
