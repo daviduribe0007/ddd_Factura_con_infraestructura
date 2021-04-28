@@ -1,4 +1,4 @@
-package co.com.softka.softkau.tengohambrerestaurantbar.domain.factura.events;
+package co.com.softka.softkau.tengohambrerestaurantbar.domain.factura.values;
 
 import co.com.sofka.domain.generic.Identity;
 
