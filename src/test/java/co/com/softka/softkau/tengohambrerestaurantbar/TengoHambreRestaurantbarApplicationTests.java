@@ -1,4 +1,4 @@
-package co.com.softka.softkau.demo;
+package co.com.softka.softkau.tengohambrerestaurantbar;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
