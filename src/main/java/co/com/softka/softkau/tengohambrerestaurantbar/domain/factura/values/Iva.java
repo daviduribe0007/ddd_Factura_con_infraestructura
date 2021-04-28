@@ -1,18 +1,19 @@
 package co.com.softka.softkau.tengohambrerestaurantbar.domain.factura.values;
 
+
 import co.com.sofka.domain.generic.ValueObject;
 
 import java.util.Objects;
 
-public class Dinero implements ValueObject<Integer> {
-    private final Integer value;
+public class Iva implements ValueObject<Float> {
+    private final Float value;
 
-    public Dinero(Integer dinero) {
-        this.value = Objects.requireNonNull(dinero);
+    public Iva(Float iva) {
+        this.value = Objects.requireNonNull(iva);
     }
 
     @Override
-    public Integer value() {
+    public Float value() {
         return value;
     }
 }
