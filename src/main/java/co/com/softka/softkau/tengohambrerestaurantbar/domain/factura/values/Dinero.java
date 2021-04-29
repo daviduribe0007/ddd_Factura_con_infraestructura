@@ -24,7 +24,7 @@ public class Dinero implements ValueObject<Integer> {
     }
 
     public Dinero restar(Integer dinero) {
-        if (0 <= dinero) {
+        if (dinero <= 0) {
             throw new IllegalArgumentException("El valor del dinero no puede ser negativo ni 0");
         }
         return new Dinero(this.value() - dinero);
