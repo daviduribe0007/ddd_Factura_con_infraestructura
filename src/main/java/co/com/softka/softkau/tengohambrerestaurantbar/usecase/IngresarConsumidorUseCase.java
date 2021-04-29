@@ -11,12 +11,12 @@ public class IngresarConsumidorUseCase extends UseCase<RequestCommand<IngresarCo
     @Override
     public void executeUseCase(RequestCommand<IngresarConsumidor> ingresarConsumidorRequestCommand) {
         var command = ingresarConsumidorRequestCommand.getCommand();
-        var factura = Factura.from(command.getFacturaId(),retrieveEvents());
+        var factura = Factura.from(command.getFacturaId(), retrieveEvents());
 
-        try{
-            factura.ingresarConsumidor(command.getConsumidorId(),command.getNombre(),command.getCelular());
+        try {
+            factura.ingresarConsumidor(command.getConsumidorId(), command.getNombre(), command.getCelular());
             emit().onResponse((new ResponseEvents(factura.getUncommittedChanges())));
-        }catch(RuntimeException e){
+        } catch (RuntimeException e) {
             emit().onError(new BusinessException(factura.identity().value(), e.getMessage()));
         }
     }

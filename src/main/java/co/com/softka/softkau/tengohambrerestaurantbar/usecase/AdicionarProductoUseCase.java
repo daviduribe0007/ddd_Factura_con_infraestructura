@@ -13,12 +13,9 @@ public class AdicionarProductoUseCase extends UseCase<RequestCommand<AdicionarPr
         var command = adicionarProductoRequestCommand.getCommand();
 
         var factura = Factura.from(command.getFacturaId(), retrieveEvents());
-        if(command.getPrecio().value() <= 0){
+        if (command.getPrecio().value() <= 0) {
             throw new BusinessException(factura.identity().value(), "No se puede Ingresar valores negativos o iguales a 0");
         }
-
-
-
         try {
             factura.adicionarProducto(command.getProductoId(), command.getDescripcion(), command.getPrecio());
             emit().onResponse((new ResponseEvents(factura.getUncommittedChanges())));
