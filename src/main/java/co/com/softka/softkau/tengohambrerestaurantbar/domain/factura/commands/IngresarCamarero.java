@@ -15,7 +15,6 @@ public class IngresarCamarero implements Command {
 
     public IngresarCamarero(FacturaId facturaId, CamareroId camareroId, Nombre nombre, Sector sector){
         this.facturaId = facturaId;
-
         this.camareroId = camareroId;
         this.nombre = nombre;
         this.sector = sector;
