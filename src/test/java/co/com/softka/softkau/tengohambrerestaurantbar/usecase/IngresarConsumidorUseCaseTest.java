@@ -32,8 +32,9 @@ class IngresarConsumidorUseCaseTest {
         var consumidorId = ConsumidorId.of("123456789");
         var nombreConsumidor= new Nombre("Maria");
         var celular = new Celular("3193256835");
+        var correo = new Correo("Daviduribe@gmail.com");
 
-        var command  = new IngresarConsumidor(facturaId,consumidorId,nombreConsumidor,celular);
+        var command  = new IngresarConsumidor(facturaId,consumidorId,nombreConsumidor,celular,correo);
         var useCase = new IngresarConsumidorUseCase();
 
         when(repository.getEventsBy(facturaId.value())).thenReturn(eventStored(facturaId,fecha));
@@ -51,6 +52,7 @@ class IngresarConsumidorUseCaseTest {
         Assertions.assertEquals("123456789", event.getConsumidorId().value());
         Assertions.assertEquals("Maria", event.getNombre().value());
         Assertions.assertEquals("3193256835", event.getCelular().value());
+        Assertions.assertEquals("Daviduribe@gmail.com", event.getCorreo().value());
 
 
     }

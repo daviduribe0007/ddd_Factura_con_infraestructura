@@ -14,7 +14,7 @@ public class IngresarConsumidorUseCase extends UseCase<RequestCommand<IngresarCo
         var factura = Factura.from(command.getFacturaId(), retrieveEvents());
 
         try {
-            factura.ingresarConsumidor(command.getConsumidorId(), command.getNombre(), command.getCelular());
+            factura.ingresarConsumidor(command.getConsumidorId(), command.getNombre(), command.getCelular(),command.getCorreo());
             emit().onResponse((new ResponseEvents(factura.getUncommittedChanges())));
         } catch (RuntimeException e) {
             emit().onError(new BusinessException(factura.identity().value(), e.getMessage()));

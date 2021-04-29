@@ -20,6 +20,7 @@ public class Factura extends AggregateEvent<FacturaId> {
     protected Dinero propina;
     protected Dinero subtotal;
     protected Dinero total;
+    protected Reseña reseña;
 
 
 
@@ -43,8 +44,8 @@ public class Factura extends AggregateEvent<FacturaId> {
         appendChange( new CamareroIngresado(camareroId,nombre,sector)).apply();
     }
 
-    public void ingresarConsumidor(ConsumidorId consumidorId,Nombre nombre,Celular celular){
-        appendChange( new ConsumidorIngresado(consumidorId,nombre,celular)).apply();
+    public void ingresarConsumidor(ConsumidorId consumidorId,Nombre nombre,Celular celular, Correo correo){
+        appendChange( new ConsumidorIngresado(consumidorId,nombre,celular,correo)).apply();
     }
     public void adicionarProducto(ProductoId productoId, Descripcion descripcion, Dinero precio){
         appendChange(new ProductoAdicionado(productoId, descripcion, precio));
