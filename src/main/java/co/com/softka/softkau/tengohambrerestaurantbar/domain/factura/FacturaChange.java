@@ -39,5 +39,6 @@ public class FacturaChange extends EventChange {
         apply((SubtotalSumado event) ->{
             factura.subtotal = event.getSumar();
         });
+
     }
 }
