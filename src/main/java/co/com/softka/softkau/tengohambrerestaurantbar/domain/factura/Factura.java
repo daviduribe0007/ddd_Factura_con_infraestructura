@@ -3,6 +3,7 @@ package co.com.softka.softkau.tengohambrerestaurantbar.domain.factura;
 import co.com.sofka.domain.generic.AggregateEvent;
 import co.com.sofka.domain.generic.DomainEvent;
 import co.com.softka.softkau.tengohambrerestaurantbar.domain.factura.events.CamareroIngresado;
+import co.com.softka.softkau.tengohambrerestaurantbar.domain.factura.events.ConsumidorIngresado;
 import co.com.softka.softkau.tengohambrerestaurantbar.domain.factura.events.FacturaCreada;
 import co.com.softka.softkau.tengohambrerestaurantbar.domain.factura.values.*;
 
@@ -40,6 +41,10 @@ public class Factura extends AggregateEvent<FacturaId> {
 
     public void ingresarCamarero(CamareroId camareroId,Nombre nombre,Sector sector){
         appendChange( new CamareroIngresado(camareroId,nombre,sector)).apply();
+    }
+
+    public void ingresarConsumidor(ConsumidorId consumidorId,Nombre nombre,Celular celular){
+        appendChange( new ConsumidorIngresado(consumidorId,nombre,celular)).apply();
     }
 
 
