@@ -35,7 +35,6 @@ class CrearFacturaUseCaseTest {
         Assertions.assertTrue(Objects.nonNull(facturaCreada.getClass()));
         Assertions.assertEquals("1", facturaCreada.aggregateRootId());
         Assertions.assertEquals("2020,04,28", facturaCreada.getFecha().value());
-
     }
 
 }

@@ -1,9 +1,12 @@
 package co.com.softka.softkau.tengohambrerestaurantbar.domain.factura;
 
 import co.com.sofka.domain.generic.AggregateEvent;
+import co.com.sofka.domain.generic.DomainEvent;
+import co.com.softka.softkau.tengohambrerestaurantbar.domain.factura.events.CamareroIngresado;
 import co.com.softka.softkau.tengohambrerestaurantbar.domain.factura.events.FacturaCreada;
 import co.com.softka.softkau.tengohambrerestaurantbar.domain.factura.values.*;
 
+import java.util.List;
 import java.util.Map;
 
 public class Factura extends AggregateEvent<FacturaId> {
@@ -27,6 +30,16 @@ public class Factura extends AggregateEvent<FacturaId> {
     private Factura(FacturaId facturaId){
         super(facturaId);
         subscribe(new FacturaChange(this));
+    }
+
+    public static Factura from(FacturaId facturaId, List<DomainEvent> events) {
+        var factura = new Factura(facturaId);
+        events.forEach(factura::applyEvent);
+        return factura;
+    }
+
+    public void ingresarCamarero(CamareroId camareroId,Nombre nombre,Sector sector){
+        appendChange( new CamareroIngresado(camareroId,nombre,sector)).apply();
     }
 
 
