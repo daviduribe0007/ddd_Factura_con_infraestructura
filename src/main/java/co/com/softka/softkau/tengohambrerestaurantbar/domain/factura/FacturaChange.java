@@ -1,9 +1,7 @@
 package co.com.softka.softkau.tengohambrerestaurantbar.domain.factura;
 
 import co.com.sofka.domain.generic.EventChange;
-import co.com.softka.softkau.tengohambrerestaurantbar.domain.factura.events.CamareroIngresado;
-import co.com.softka.softkau.tengohambrerestaurantbar.domain.factura.events.ConsumidorIngresado;
-import co.com.softka.softkau.tengohambrerestaurantbar.domain.factura.events.FacturaCreada;
+import co.com.softka.softkau.tengohambrerestaurantbar.domain.factura.events.*;
 import co.com.softka.softkau.tengohambrerestaurantbar.domain.factura.values.Dinero;
 import co.com.softka.softkau.tengohambrerestaurantbar.domain.factura.values.Iva;
 
@@ -30,6 +28,16 @@ public class FacturaChange extends EventChange {
         apply((ConsumidorIngresado event) -> {
             factura.consumidor = new Consumidor(event.getConsumidorId(),
                     event.getNombre(),event.getCelular());
+        });
+
+        apply((ProductoAdicionado event) ->{
+            factura.productos.put(event.getProductoId(),
+                    new Producto(event.getProductoId(),event.getDescripcion(),
+                            event.getPrecio()));
+        });
+
+        apply((SubtotalSumado event) ->{
+            factura.subtotal = event.getSumar();
         });
     }
 }

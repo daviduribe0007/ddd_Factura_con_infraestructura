@@ -2,9 +2,7 @@ package co.com.softka.softkau.tengohambrerestaurantbar.domain.factura;
 
 import co.com.sofka.domain.generic.AggregateEvent;
 import co.com.sofka.domain.generic.DomainEvent;
-import co.com.softka.softkau.tengohambrerestaurantbar.domain.factura.events.CamareroIngresado;
-import co.com.softka.softkau.tengohambrerestaurantbar.domain.factura.events.ConsumidorIngresado;
-import co.com.softka.softkau.tengohambrerestaurantbar.domain.factura.events.FacturaCreada;
+import co.com.softka.softkau.tengohambrerestaurantbar.domain.factura.events.*;
 import co.com.softka.softkau.tengohambrerestaurantbar.domain.factura.values.*;
 
 import java.util.List;
@@ -45,6 +43,10 @@ public class Factura extends AggregateEvent<FacturaId> {
 
     public void ingresarConsumidor(ConsumidorId consumidorId,Nombre nombre,Celular celular){
         appendChange( new ConsumidorIngresado(consumidorId,nombre,celular)).apply();
+    }
+    public void adicionarProducto(ProductoId productoId, Descripcion descripcion, Dinero precio){
+        appendChange(new ProductoAdicionado(productoId, descripcion, precio));
+        appendChange(new SubtotalSumado(subtotal.sumar(precio.value())));
     }
 
 

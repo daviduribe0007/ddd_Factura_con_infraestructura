@@ -15,4 +15,18 @@ public class Dinero implements ValueObject<Integer> {
     public Integer value() {
         return value;
     }
+
+    public Dinero sumar(Integer dinero) {
+        if (0 <= dinero) {
+            throw new IllegalArgumentException("El valor del dinero no puede ser negativo ni 0");
+        }
+        return new Dinero(this.value() + dinero);
+    }
+
+    public Dinero restar(Integer dinero) {
+        if (0 <= dinero) {
+            throw new IllegalArgumentException("El valor del dinero no puede ser negativo ni 0");
+        }
+        return new Dinero(this.value() - dinero);
+    }
 }
