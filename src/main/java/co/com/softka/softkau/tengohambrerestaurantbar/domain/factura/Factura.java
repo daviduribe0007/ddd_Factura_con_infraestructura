@@ -20,7 +20,7 @@ public class Factura extends AggregateEvent<FacturaId> {
     protected Dinero propina;
     protected Dinero subtotal;
     protected Dinero total;
-    protected Reseña reseña;
+    protected Resena resena;
 
 
 
@@ -56,6 +56,10 @@ public class Factura extends AggregateEvent<FacturaId> {
         var producto = productos.get(productoId);
         appendChange(new ProductoRemovido(productoId));
         appendChange(new SubtotalModificado(subtotal.restar(producto.precio().value())));
+    }
+
+    public void agregarResena(Resena resena){
+        appendChange( new ResenaAgregada(resena)).apply();
     }
 
 

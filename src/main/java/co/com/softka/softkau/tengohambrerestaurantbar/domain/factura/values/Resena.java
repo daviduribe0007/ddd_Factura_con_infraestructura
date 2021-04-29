@@ -4,11 +4,11 @@ import co.com.sofka.domain.generic.ValueObject;
 
 import java.util.Objects;
 
-public class Reseña implements ValueObject<String> {
+public class Resena implements ValueObject<String> {
 
     private final String value;
 
-    public Reseña(String reseña) {
+    public Resena(String reseña) {
         this.value = Objects.requireNonNull(reseña);
     }
 

@@ -5,7 +5,7 @@ import co.com.softka.softkau.tengohambrerestaurantbar.domain.factura.events.Cama
 import co.com.softka.softkau.tengohambrerestaurantbar.domain.factura.events.*;
 import co.com.softka.softkau.tengohambrerestaurantbar.domain.factura.values.Dinero;
 import co.com.softka.softkau.tengohambrerestaurantbar.domain.factura.values.Iva;
-import co.com.softka.softkau.tengohambrerestaurantbar.domain.factura.values.Reseña;
+import co.com.softka.softkau.tengohambrerestaurantbar.domain.factura.values.Resena;
 
 import java.util.HashMap;
 
@@ -20,7 +20,7 @@ public class FacturaChange extends EventChange {
             factura.iva = new Iva(0.1f);
             factura.propina = new Dinero(0);
             factura.total = new Dinero(0);
-            factura.reseña= new Reseña(" ");
+            factura.resena = new Resena(" ");
         });
 
         apply((CamareroIngresado event) -> {
@@ -46,6 +46,11 @@ public class FacturaChange extends EventChange {
         apply((ProductoRemovido event) ->{
             factura.productos.remove(event.getProductoId());
         });
+
+        apply((ResenaAgregada event) ->{
+            factura.resena = event.getReseña();
+        });
+
 
 
 
