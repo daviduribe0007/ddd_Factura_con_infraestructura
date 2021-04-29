@@ -6,7 +6,6 @@ import co.com.sofka.business.support.RequestCommand;
 import co.com.sofka.business.support.ResponseEvents;
 import co.com.softka.softkau.tengohambrerestaurantbar.domain.factura.Factura;
 import co.com.softka.softkau.tengohambrerestaurantbar.domain.factura.commands.IngresarCamarero;
-import co.com.softka.softkau.tengohambrerestaurantbar.domain.factura.events.CamareroIngresado;
 
 public class IngresarCamareroUseCase extends UseCase<RequestCommand<IngresarCamarero>, ResponseEvents> {
 

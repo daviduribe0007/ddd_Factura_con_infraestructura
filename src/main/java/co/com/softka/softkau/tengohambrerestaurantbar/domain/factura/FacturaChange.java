@@ -1,6 +1,7 @@
 package co.com.softka.softkau.tengohambrerestaurantbar.domain.factura;
 
 import co.com.sofka.domain.generic.EventChange;
+import co.com.softka.softkau.tengohambrerestaurantbar.domain.factura.events.CamareroIngresado;
 import co.com.softka.softkau.tengohambrerestaurantbar.domain.factura.events.*;
 import co.com.softka.softkau.tengohambrerestaurantbar.domain.factura.values.Dinero;
 import co.com.softka.softkau.tengohambrerestaurantbar.domain.factura.values.Iva;
@@ -36,9 +37,15 @@ public class FacturaChange extends EventChange {
                             event.getPrecio()));
         });
 
-        apply((SubtotalSumado event) ->{
-            factura.subtotal = event.getSumar();
+        apply((SubtotalModificado event) ->{
+            factura.subtotal = event.getSubtotal();
         });
+
+        apply((ProductoRemovido event) ->{
+            factura.productos.remove(event.getProductoId());
+        });
+
+
 
     }
 }
