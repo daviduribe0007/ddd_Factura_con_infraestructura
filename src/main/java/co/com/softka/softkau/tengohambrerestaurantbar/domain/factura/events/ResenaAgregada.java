@@ -15,4 +15,5 @@ public class ResenaAgregada extends DomainEvent {
     public Resena getResena() {
         return reseña;
     }
+
 }

@@ -25,33 +25,35 @@ public class FacturaChange extends EventChange {
 
         apply((CamareroIngresado event) -> {
             factura.camarero = new Camarero(event.getCamareroId(),
-                    event.getNombre(),event.getSector());
+                    event.getNombre(), event.getSector());
         });
 
         apply((ConsumidorIngresado event) -> {
             factura.consumidor = new Consumidor(event.getConsumidorId(),
-                    event.getNombre(),event.getCelular(),event.getCorreo());
+                    event.getNombre(), event.getCelular(), event.getCorreo());
         });
 
-        apply((ProductoAdicionado event) ->{
+        apply((ProductoAdicionado event) -> {
             factura.productos.put(event.getProductoId(),
-                    new Producto(event.getProductoId(),event.getDescripcion(),
+                    new Producto(event.getProductoId(), event.getDescripcion(),
                             event.getPrecio()));
         });
 
-        apply((SubtotalModificado event) ->{
+        apply((SubtotalModificado event) -> {
             factura.subtotal = event.getSubtotal();
         });
 
-        apply((ProductoRemovido event) ->{
+        apply((ProductoRemovido event) -> {
             factura.productos.remove(event.getProductoId());
         });
 
-        apply((ResenaAgregada event) ->{
+        apply((ResenaAgregada event) -> {
             factura.resena = event.getResena();
         });
 
-
+        apply((PropinaCalculada event) -> {
+            factura.propina = event.getPropina();
+        });
 
 
     }

@@ -24,6 +24,7 @@ public class Factura extends AggregateEvent<FacturaId> {
 
 
 
+
     public Factura(FacturaId facturaId,Fecha fecha) {
         super(facturaId);
         appendChange(new FacturaCreada(facturaId,fecha)).apply();
@@ -62,5 +63,12 @@ public class Factura extends AggregateEvent<FacturaId> {
         appendChange( new ResenaAgregada(resena)).apply();
     }
 
+    public void calcularPropina(Dinero propina){
+        appendChange(new PropinaCalculada(propina)).apply();
+    }
+
+    public Dinero getSubtotal() {
+        return subtotal;
+    }
 
 }
