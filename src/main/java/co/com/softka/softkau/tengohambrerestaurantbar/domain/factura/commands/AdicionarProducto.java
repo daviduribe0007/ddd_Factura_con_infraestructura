@@ -13,7 +13,7 @@ public class AdicionarProducto implements Command {
     private final Descripcion descripcion;
     private final Dinero precio;
 
-    public AdicionarProducto(FacturaId facturaId, ProductoId productoId, Descripcion descripcion, Dinero precio){
+    public AdicionarProducto(FacturaId facturaId, ProductoId productoId, Descripcion descripcion, Dinero precio) {
         this.facturaId = facturaId;
         this.productoId = productoId;
         this.descripcion = descripcion;

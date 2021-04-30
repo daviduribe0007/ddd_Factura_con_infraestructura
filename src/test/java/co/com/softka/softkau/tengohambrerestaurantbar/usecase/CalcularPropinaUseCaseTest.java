@@ -5,8 +5,17 @@ import co.com.sofka.business.generic.UseCaseHandler;
 import co.com.sofka.business.repository.DomainEventRepository;
 import co.com.sofka.business.support.TriggeredEvent;
 import co.com.sofka.domain.generic.DomainEvent;
-import co.com.softka.softkau.tengohambrerestaurantbar.domain.factura.events.*;
-import co.com.softka.softkau.tengohambrerestaurantbar.domain.factura.values.*;
+import co.com.softka.softkau.tengohambrerestaurantbar.domain.factura.events.ResenaAgregada;
+import co.com.softka.softkau.tengohambrerestaurantbar.domain.factura.events.PropinaCalculada;
+import co.com.softka.softkau.tengohambrerestaurantbar.domain.factura.events.FacturaCreada;
+import co.com.softka.softkau.tengohambrerestaurantbar.domain.factura.events.ProductoAdicionado;
+import co.com.softka.softkau.tengohambrerestaurantbar.domain.factura.events.SubtotalModificado;
+import co.com.softka.softkau.tengohambrerestaurantbar.domain.factura.values.Resena;
+import co.com.softka.softkau.tengohambrerestaurantbar.domain.factura.values.FacturaId;
+import co.com.softka.softkau.tengohambrerestaurantbar.domain.factura.values.Fecha;
+import co.com.softka.softkau.tengohambrerestaurantbar.domain.factura.values.ProductoId;
+import co.com.softka.softkau.tengohambrerestaurantbar.domain.factura.values.Descripcion;
+import co.com.softka.softkau.tengohambrerestaurantbar.domain.factura.values.Dinero;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -19,18 +28,19 @@ import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
 class CalcularPropinaUseCaseTest {
+
     @Mock
     private DomainEventRepository repository;
 
     @Test
     void calcularPropina() {
-
         var resena = new Resena("Muy bueno todo");
         var event = new ResenaAgregada(resena);
         var useCase = new CalcularPropinaUseCase();
+
         event.setAggregateRootId("199");
 
-        when(repository.getEventsBy(event.aggregateRootId())).thenReturn(eventStored( resena));
+        when(repository.getEventsBy(event.aggregateRootId())).thenReturn(eventStored(resena));
         useCase.addRepository(repository);
 
         var events = UseCaseHandler.getInstance()
@@ -41,10 +51,9 @@ class CalcularPropinaUseCaseTest {
 
         var propinacalculada = (PropinaCalculada) events.get(0);
 
-
-
-        Assertions.assertEquals(1750,propinacalculada.getPropina().value());
+        Assertions.assertEquals(1750, propinacalculada.getPropina().value());
     }
+
     private List<DomainEvent> eventStored(Resena resena) {
         var facturaId = FacturaId.of("1");
         var fecha = new Fecha("2021,04,28");

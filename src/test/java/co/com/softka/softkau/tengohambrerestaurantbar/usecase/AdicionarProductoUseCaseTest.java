@@ -22,6 +22,7 @@ import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
 class AdicionarProductoUseCaseTest {
+
     @Mock
     private DomainEventRepository repository;
 
@@ -32,10 +33,10 @@ class AdicionarProductoUseCaseTest {
         var productoId = ProductoId.of("11");
         var descripcion = new Descripcion("Sancocho trifasico");
         var precio = new Dinero(35000);
-        var command  =  new AdicionarProducto(facturaId,productoId,descripcion,precio);
+        var command = new AdicionarProducto(facturaId, productoId, descripcion, precio);
         var useCase = new AdicionarProductoUseCase();
 
-        when(repository.getEventsBy(facturaId.value())).thenReturn(eventStored( facturaId, fecha));
+        when(repository.getEventsBy(facturaId.value())).thenReturn(eventStored(facturaId, fecha));
         useCase.addRepository(repository);
 
         var events = UseCaseHandler.getInstance()
@@ -50,9 +51,7 @@ class AdicionarProductoUseCaseTest {
         Assertions.assertEquals("11", event.getProductoId().value());
         Assertions.assertEquals("Sancocho trifasico", event.getDescripcion().value());
         Assertions.assertEquals(35000, event.getPrecio().value());
-
     }
-
 
 
     @Test
@@ -76,9 +75,8 @@ class AdicionarProductoUseCaseTest {
         });
 
     }
-    private List<DomainEvent> eventStored (FacturaId facturaId, Fecha fecha){
+
+    private List<DomainEvent> eventStored(FacturaId facturaId, Fecha fecha) {
         return List.of(new FacturaCreada(facturaId, fecha));
     }
-
-
 }

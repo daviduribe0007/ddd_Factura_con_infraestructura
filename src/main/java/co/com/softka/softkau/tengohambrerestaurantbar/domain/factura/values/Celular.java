@@ -5,7 +5,6 @@ import co.com.sofka.domain.generic.ValueObject;
 import java.util.Objects;
 
 public class Celular implements ValueObject<String> {
-
     private final String value;
 
     public Celular(String celular) {

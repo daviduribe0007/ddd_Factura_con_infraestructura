@@ -9,7 +9,7 @@ public class AgregarResena implements Command {
     private final FacturaId facturaId;
     private final Resena resena;
 
-    public AgregarResena(FacturaId facturaId, Resena resena){
+    public AgregarResena(FacturaId facturaId, Resena resena) {
         this.facturaId = facturaId;
         this.resena = resena;
     }

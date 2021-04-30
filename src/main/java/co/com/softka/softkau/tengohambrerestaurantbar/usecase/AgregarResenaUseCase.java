@@ -14,7 +14,7 @@ public class AgregarResenaUseCase extends UseCase<RequestCommand<AgregarResena>,
         var factura = Factura.from(command.getFacturaId(), retrieveEvents());
 
         try {
-            factura.agregarResena( command.getResena());
+            factura.agregarResena(command.getResena());
             emit().onResponse((new ResponseEvents(factura.getUncommittedChanges())));
         } catch (RuntimeException e) {
             emit().onError(new BusinessException(factura.identity().value(), e.getMessage()));

@@ -1,7 +1,11 @@
 package co.com.softka.softkau.tengohambrerestaurantbar.domain.factura.commands;
 
 import co.com.sofka.domain.generic.Command;
-import co.com.softka.softkau.tengohambrerestaurantbar.domain.factura.values.*;
+import co.com.softka.softkau.tengohambrerestaurantbar.domain.factura.values.FacturaId;
+import co.com.softka.softkau.tengohambrerestaurantbar.domain.factura.values.ConsumidorId;
+import co.com.softka.softkau.tengohambrerestaurantbar.domain.factura.values.Nombre;
+import co.com.softka.softkau.tengohambrerestaurantbar.domain.factura.values.Celular;
+import co.com.softka.softkau.tengohambrerestaurantbar.domain.factura.values.Correo;
 
 public class IngresarConsumidor implements Command {
 
@@ -11,8 +15,8 @@ public class IngresarConsumidor implements Command {
     private final Celular celular;
     private final Correo correo;
 
-    public  IngresarConsumidor(FacturaId facturaId, ConsumidorId consumidorId, Nombre nombre,
-                               Celular celular, Correo correo){
+    public IngresarConsumidor(FacturaId facturaId, ConsumidorId consumidorId, Nombre nombre, Celular celular,
+                              Correo correo) {
         this.facturaId = facturaId;
         this.consumidorId = consumidorId;
         this.nombre = nombre;

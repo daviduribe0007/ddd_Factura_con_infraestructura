@@ -13,15 +13,12 @@ import org.junit.jupiter.api.Test;
 import java.util.List;
 import java.util.Objects;
 
-import static org.junit.jupiter.api.Assertions.*;
-
 class CrearFacturaUseCaseTest {
 
     @Test
-    void crearFactura(){
+    void crearFactura() {
         var facturaId = FacturaId.of("1");
-        var fecha =  new Fecha("2020,04,28");
-
+        var fecha = new Fecha("2020,04,28");
         var command = new CrearFactura(facturaId, fecha);
         var useCase = new CrearFacturaUseCase();
 
@@ -36,5 +33,4 @@ class CrearFacturaUseCaseTest {
         Assertions.assertEquals("1", facturaCreada.aggregateRootId());
         Assertions.assertEquals("2020,04,28", facturaCreada.getFecha().value());
     }
-
 }

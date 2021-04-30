@@ -4,8 +4,18 @@ import co.com.sofka.business.generic.UseCaseHandler;
 import co.com.sofka.business.repository.DomainEventRepository;
 import co.com.sofka.business.support.TriggeredEvent;
 import co.com.sofka.domain.generic.DomainEvent;
-import co.com.softka.softkau.tengohambrerestaurantbar.domain.factura.events.*;
-import co.com.softka.softkau.tengohambrerestaurantbar.domain.factura.values.*;
+import co.com.softka.softkau.tengohambrerestaurantbar.domain.factura.events.PropinaCalculada;
+import co.com.softka.softkau.tengohambrerestaurantbar.domain.factura.events.TotalCalculado;
+import co.com.softka.softkau.tengohambrerestaurantbar.domain.factura.events.FacturaCreada;
+import co.com.softka.softkau.tengohambrerestaurantbar.domain.factura.events.ProductoAdicionado;
+import co.com.softka.softkau.tengohambrerestaurantbar.domain.factura.events.SubtotalModificado;
+import co.com.softka.softkau.tengohambrerestaurantbar.domain.factura.events.ResenaAgregada;
+import co.com.softka.softkau.tengohambrerestaurantbar.domain.factura.values.Dinero;
+import co.com.softka.softkau.tengohambrerestaurantbar.domain.factura.values.FacturaId;
+import co.com.softka.softkau.tengohambrerestaurantbar.domain.factura.values.Fecha;
+import co.com.softka.softkau.tengohambrerestaurantbar.domain.factura.values.Resena;
+import co.com.softka.softkau.tengohambrerestaurantbar.domain.factura.values.ProductoId;
+import co.com.softka.softkau.tengohambrerestaurantbar.domain.factura.values.Descripcion;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -27,6 +37,7 @@ class CalcularTotalUseCaseTest {
         var propina = new Dinero(10000);
         var event = new PropinaCalculada(propina);
         var useCase = new CalcularTotalUseCase();
+
         event.setAggregateRootId("199");
 
         when(repository.getEventsBy(event.aggregateRootId())).thenReturn(eventStored());
@@ -40,8 +51,9 @@ class CalcularTotalUseCaseTest {
 
         var totalcalculado = (TotalCalculado) events.get(0);
 
-        Assertions.assertEquals(230000,totalcalculado.getTotal().value());
+        Assertions.assertEquals(230000, totalcalculado.getTotal().value());
     }
+
     private List<DomainEvent> eventStored() {
         var facturaId = FacturaId.of("1");
         var fecha = new Fecha("2021,04,28");
@@ -59,5 +71,4 @@ class CalcularTotalUseCaseTest {
 
         );
     }
-
 }

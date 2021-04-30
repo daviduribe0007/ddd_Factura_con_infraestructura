@@ -2,7 +2,14 @@ package co.com.softka.softkau.tengohambrerestaurantbar.domain.factura;
 
 import co.com.sofka.domain.generic.EventChange;
 import co.com.softka.softkau.tengohambrerestaurantbar.domain.factura.events.CamareroIngresado;
-import co.com.softka.softkau.tengohambrerestaurantbar.domain.factura.events.*;
+import co.com.softka.softkau.tengohambrerestaurantbar.domain.factura.events.TotalCalculado;
+import co.com.softka.softkau.tengohambrerestaurantbar.domain.factura.events.FacturaCreada;
+import co.com.softka.softkau.tengohambrerestaurantbar.domain.factura.events.ConsumidorIngresado;
+import co.com.softka.softkau.tengohambrerestaurantbar.domain.factura.events.ProductoAdicionado;
+import co.com.softka.softkau.tengohambrerestaurantbar.domain.factura.events.SubtotalModificado;
+import co.com.softka.softkau.tengohambrerestaurantbar.domain.factura.events.ProductoRemovido;
+import co.com.softka.softkau.tengohambrerestaurantbar.domain.factura.events.ResenaAgregada;
+import co.com.softka.softkau.tengohambrerestaurantbar.domain.factura.events.PropinaCalculada;
 import co.com.softka.softkau.tengohambrerestaurantbar.domain.factura.values.Dinero;
 import co.com.softka.softkau.tengohambrerestaurantbar.domain.factura.values.Iva;
 import co.com.softka.softkau.tengohambrerestaurantbar.domain.factura.values.Resena;
@@ -25,17 +32,21 @@ public class FacturaChange extends EventChange {
 
         apply((CamareroIngresado event) -> {
             factura.camarero = new Camarero(event.getCamareroId(),
-                    event.getNombre(), event.getSector());
+                    event.getNombre(),
+                    event.getSector());
         });
 
         apply((ConsumidorIngresado event) -> {
             factura.consumidor = new Consumidor(event.getConsumidorId(),
-                    event.getNombre(), event.getCelular(), event.getCorreo());
+                    event.getNombre(),
+                    event.getCelular(),
+                    event.getCorreo());
         });
 
         apply((ProductoAdicionado event) -> {
             factura.productos.put(event.getProductoId(),
-                    new Producto(event.getProductoId(), event.getDescripcion(),
+                    new Producto(event.getProductoId(),
+                            event.getDescripcion(),
                             event.getPrecio()));
         });
 
@@ -58,7 +69,5 @@ public class FacturaChange extends EventChange {
         apply((TotalCalculado event) -> {
             factura.total = event.getTotal();
         });
-
-
     }
 }

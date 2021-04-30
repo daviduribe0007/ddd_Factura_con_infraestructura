@@ -8,7 +8,7 @@ public class CrearFactura implements Command {
     private final FacturaId facturaId;
     private final Fecha fecha;
 
-    public CrearFactura(FacturaId facturaId, Fecha fecha){
+    public CrearFactura(FacturaId facturaId, Fecha fecha) {
 
         this.facturaId = facturaId;
         this.fecha = fecha;

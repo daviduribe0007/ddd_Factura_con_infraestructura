@@ -7,7 +7,9 @@ import co.com.sofka.domain.generic.DomainEvent;
 import co.com.softka.softkau.tengohambrerestaurantbar.domain.factura.commands.AgregarResena;
 import co.com.softka.softkau.tengohambrerestaurantbar.domain.factura.events.FacturaCreada;
 import co.com.softka.softkau.tengohambrerestaurantbar.domain.factura.events.ResenaAgregada;
-import co.com.softka.softkau.tengohambrerestaurantbar.domain.factura.values.*;
+import co.com.softka.softkau.tengohambrerestaurantbar.domain.factura.values.FacturaId;
+import co.com.softka.softkau.tengohambrerestaurantbar.domain.factura.values.Fecha;
+import co.com.softka.softkau.tengohambrerestaurantbar.domain.factura.values.Resena;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -18,7 +20,6 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import java.util.List;
 
 import static org.mockito.Mockito.when;
-
 
 @ExtendWith(MockitoExtension.class)
 class AgregarResenaUseCaseTest {
@@ -44,6 +45,7 @@ class AgregarResenaUseCaseTest {
                 .getDomainEvents();
 
         var event = (ResenaAgregada) events.get(0);
+
         Mockito.verify(repository).getEventsBy(facturaId.value());
         Assertions.assertEquals("Muy buena la comida pero demorada", event.getResena().value());
     }

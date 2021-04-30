@@ -3,7 +3,6 @@ package co.com.softka.softkau.tengohambrerestaurantbar.domain.factura.events;
 import co.com.sofka.domain.generic.DomainEvent;
 import co.com.softka.softkau.tengohambrerestaurantbar.domain.factura.values.Descripcion;
 import co.com.softka.softkau.tengohambrerestaurantbar.domain.factura.values.Dinero;
-import co.com.softka.softkau.tengohambrerestaurantbar.domain.factura.values.FacturaId;
 import co.com.softka.softkau.tengohambrerestaurantbar.domain.factura.values.ProductoId;
 
 public class ProductoAdicionado extends DomainEvent {
