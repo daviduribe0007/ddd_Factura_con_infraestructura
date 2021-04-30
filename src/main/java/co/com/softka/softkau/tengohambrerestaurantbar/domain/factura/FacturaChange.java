@@ -55,6 +55,10 @@ public class FacturaChange extends EventChange {
             factura.propina = event.getPropina();
         });
 
+        apply((TotalCalculado event) -> {
+            factura.total = event.getTotal();
+        });
+
 
     }
 }

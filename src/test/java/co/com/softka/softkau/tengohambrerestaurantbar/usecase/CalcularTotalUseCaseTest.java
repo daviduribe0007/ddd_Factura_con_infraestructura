@@ -1,6 +1,5 @@
 package co.com.softka.softkau.tengohambrerestaurantbar.usecase;
 
-
 import co.com.sofka.business.generic.UseCaseHandler;
 import co.com.sofka.business.repository.DomainEventRepository;
 import co.com.sofka.business.support.TriggeredEvent;
@@ -18,19 +17,19 @@ import java.util.List;
 import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
-class CalcularPropinaUseCaseTest {
+class CalcularTotalUseCaseTest {
+
     @Mock
     private DomainEventRepository repository;
 
     @Test
     void calcularPropina() {
-
-        var resena = new Resena("Muy bueno todo");
-        var event = new ResenaAgregada(resena);
-        var useCase = new CalcularPropinaUseCase();
+        var propina = new Dinero(10000);
+        var event = new PropinaCalculada(propina);
+        var useCase = new CalcularTotalUseCase();
         event.setAggregateRootId("199");
 
-        when(repository.getEventsBy(event.aggregateRootId())).thenReturn(eventStored( resena));
+        when(repository.getEventsBy(event.aggregateRootId())).thenReturn(eventStored());
         useCase.addRepository(repository);
 
         var events = UseCaseHandler.getInstance()
@@ -39,24 +38,26 @@ class CalcularPropinaUseCaseTest {
                 .orElseThrow()
                 .getDomainEvents();
 
-        var propinacalculada = (PropinaCalculada) events.get(0);
+        var totalcalculado = (TotalCalculado) events.get(0);
 
-
-
-        Assertions.assertEquals(1750,propinacalculada.getPropina().value());
+        Assertions.assertEquals(230000,totalcalculado.getTotal().value());
     }
-    private List<DomainEvent> eventStored(Resena resena) {
+    private List<DomainEvent> eventStored() {
         var facturaId = FacturaId.of("1");
         var fecha = new Fecha("2021,04,28");
-        var productoId = ProductoId.of("111");
-        var descripcion = new Descripcion("Sancocho trifasico");
-        var precio = new Dinero(35000);
+        var resena = new Resena("Muy bueno todo");
+        var productoId = ProductoId.of("666");
+        var descripcion = new Descripcion("Whisky Highland Park 12 Años Botella – 700ml");
+        var precio = new Dinero(200000);
 
         return List.of(
                 new FacturaCreada(facturaId, fecha),
                 new ProductoAdicionado(productoId, descripcion, precio),
-                new SubtotalModificado(new Dinero(35000)),
-                new ResenaAgregada(resena)
+                new SubtotalModificado(new Dinero(200000)),
+                new ResenaAgregada(resena),
+                new PropinaCalculada(new Dinero(10000))
+
         );
     }
+
 }

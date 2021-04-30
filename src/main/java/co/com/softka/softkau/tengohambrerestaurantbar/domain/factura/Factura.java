@@ -67,8 +67,15 @@ public class Factura extends AggregateEvent<FacturaId> {
         appendChange(new PropinaCalculada(propina)).apply();
     }
 
+    public void calcularTotal(Dinero total){
+        appendChange(new TotalCalculado(total)).apply();
+    }
+
     public Dinero getSubtotal() {
         return subtotal;
     }
 
+    public Dinero getPropina() {
+        return propina;
+    }
 }

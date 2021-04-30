@@ -6,19 +6,18 @@ import co.com.sofka.business.support.ResponseEvents;
 import co.com.sofka.business.support.TriggeredEvent;
 import co.com.softka.softkau.tengohambrerestaurantbar.domain.factura.Factura;
 import co.com.softka.softkau.tengohambrerestaurantbar.domain.factura.events.PropinaCalculada;
-import co.com.softka.softkau.tengohambrerestaurantbar.domain.factura.events.ResenaAgregada;
 import co.com.softka.softkau.tengohambrerestaurantbar.domain.factura.values.Dinero;
 import co.com.softka.softkau.tengohambrerestaurantbar.domain.factura.values.FacturaId;
 
-public class CalcularPropinaUseCase extends UseCase<TriggeredEvent<ResenaAgregada>, ResponseEvents> {
+public class CalcularTotalUseCase extends UseCase<TriggeredEvent<PropinaCalculada>, ResponseEvents> {
     @Override
-    public void executeUseCase(TriggeredEvent<ResenaAgregada> resenaAgregadaTriggeredEvent) {
-        var event = resenaAgregadaTriggeredEvent.getDomainEvent();
+    public void executeUseCase(TriggeredEvent<PropinaCalculada> propinaCalculadaTriggeredEvent) {
+        var event = propinaCalculadaTriggeredEvent.getDomainEvent();
         var factura = Factura.from(FacturaId.of(event.aggregateRootId()), retrieveEvents());
 
-        var propina =new Dinero((int) calcularPropina(factura));
+        var total = new Dinero((int) calcularTotal(factura));
         try {
-            factura.calcularPropina(propina);
+            factura.calcularTotal(total);
             emit().onResponse((new ResponseEvents(factura.getUncommittedChanges())));
         } catch (RuntimeException e) {
             emit().onError(new BusinessException(factura.identity().value(), e.getMessage()));
@@ -26,9 +25,8 @@ public class CalcularPropinaUseCase extends UseCase<TriggeredEvent<ResenaAgregad
 
     }
 
-    private float calcularPropina(Factura factura) {
-         return factura.getSubtotal().value() * 0.05f ;
+    private float calcularTotal(Factura factura) {
+        return factura.getSubtotal().value() * 1.1f + factura.getPropina().value() ;
     }
-
 
 }
