@@ -48,7 +48,7 @@ public class FacturaChange extends EventChange {
         });
 
         apply((ResenaAgregada event) ->{
-            factura.resena = event.getReseña();
+            factura.resena = event.getResena();
         });
 
 
