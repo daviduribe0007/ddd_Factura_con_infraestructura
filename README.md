@@ -1,3 +1,25 @@
+# TENGO_HAMBRE_RESTAURANT_BAR
+
+##Problema##
+
+El restaurante TengoHambreRestaurantBar con la finalidad de prestar un mejor servicio y atención a sus consumidores desea tener un sistema que le permita generar la factura por el consumo de sus productos,con esto se aclararía mucho más al cliente sobre los costos que tuvo por producto consumido, el camarero que lo atendió , el subtotal, el costo de propina y su total calculado con el iva.
+
+Al finalizar la compra, se adiciona una reseña para mejorar el servicio prestado, en una misma factura se pueden adicionar varios productos ya sea comida bebidas dulces tragos, entre otros.
+
+Si por alguna razón se adicionan productos que el cliente no consumió o se cometió un error, este puede ser retirado de la factura.
+
+El iva que manejara la factura por las nuevas leyes impuestas sera de un 10% este se calcula sobre el total del precio de los productos consumidos.
+
+La propina es obligatoria y es un 5 % del total consumido sin el impuesto.
+
+Del consumidor se requieren la cedula, el nombre, numero celular y su correo ya que este en un futuro nos podría ser muy útil.
+
+Del camarero el sector que estaba atendiendo y su nombre.
+
+El diagrama esta en el siguiente link: https://drive.google.com/file/d/1A2b6XTVOeupWcvnz6Ncb0hMmz_Sa30bM/view?usp=sharing
+
+
+
 # CHALLENGE - HACIENDO DDD DESDE CERO #
 
 ## Summary ##
