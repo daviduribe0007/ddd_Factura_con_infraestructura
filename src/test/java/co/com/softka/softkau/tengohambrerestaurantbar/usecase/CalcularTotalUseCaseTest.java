@@ -24,16 +24,12 @@ import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.util.List;
 
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
-@ExtendWith(MockitoExtension.class)
-class CalcularTotalUseCaseTest {
-
-    @Mock
-    private DomainEventRepository repository;
+class CalcularTotalUseCaseTest extends  UseCaseHandleBaseTest{
 
     @Test
-    void calcularPropina() {
+    void calcularPropina() throws InterruptedException {
         var propina = new Dinero(10000);
         var event = new PropinaCalculada(propina);
         var useCase = new CalcularTotalUseCase();
@@ -43,13 +39,15 @@ class CalcularTotalUseCaseTest {
         when(repository.getEventsBy(event.aggregateRootId())).thenReturn(eventStored());
         useCase.addRepository(repository);
 
-        var events = UseCaseHandler.getInstance()
+        UseCaseHandler.getInstance()
                 .setIdentifyExecutor(event.aggregateRootId())
-                .syncExecutor(useCase, new TriggeredEvent<>(event))
-                .orElseThrow()
-                .getDomainEvents();
+                .asyncExecutor(useCase, new TriggeredEvent<>(event))
+                .subscribe(subscriber);
 
-        var totalcalculado = (TotalCalculado) events.get(0);
+        Thread.sleep(800);
+        verify(subscriber,times(1)).onNext(eventCaptor.capture());
+
+        var totalcalculado = (TotalCalculado) eventCaptor.getAllValues().get(0);
 
         Assertions.assertEquals(230000, totalcalculado.getTotal().value());
     }

@@ -21,16 +21,12 @@ import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.util.List;
 
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
-@ExtendWith(MockitoExtension.class)
-class IngresarCamareroUseCaseTest {
-
-    @Mock
-    private DomainEventRepository repository;
+class IngresarCamareroUseCaseTest extends UseCaseHandleBaseTest{
 
     @Test
-    void ingresarCamarero() {
+    void ingresarCamarero() throws InterruptedException {
         var facturaId = FacturaId.of("1");
         var fecha = new Fecha("2021,04,28");
         var camareroId = CamareroId.of("C1");
@@ -43,13 +39,15 @@ class IngresarCamareroUseCaseTest {
         when(repository.getEventsBy(facturaId.value())).thenReturn(eventStored(facturaId, fecha));
         useCase.addRepository(repository);
 
-        var events = UseCaseHandler.getInstance()
+        UseCaseHandler.getInstance()
                 .setIdentifyExecutor(facturaId.value())
-                .syncExecutor(useCase, new RequestCommand<>(command))
-                .orElseThrow()
-                .getDomainEvents();
+                .asyncExecutor(useCase, new RequestCommand<>(command))
+                .subscribe(subscriber);
 
-        var event = (CamareroIngresado) events.get(0);
+        Thread.sleep(800);
+        verify(subscriber, times(1)).onNext(eventCaptor.capture());
+
+        var event = (CamareroIngresado) eventCaptor.getAllValues().get(0);
 
         Mockito.verify(repository).getEventsBy(facturaId.value());
         Assertions.assertEquals("C1", event.getCamareroId().value());

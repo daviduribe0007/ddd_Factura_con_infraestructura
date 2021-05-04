@@ -13,21 +13,26 @@ import org.junit.jupiter.api.Test;
 import java.util.List;
 import java.util.Objects;
 
-class CrearFacturaUseCaseTest {
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
+
+class CrearFacturaUseCaseTest extends UseCaseHandleBaseTest {
 
     @Test
-    void crearFactura() {
+    void crearFactura() throws InterruptedException {
         var facturaId = FacturaId.of("1");
         var fecha = new Fecha("2020,04,28");
         var command = new CrearFactura(facturaId, fecha);
         var useCase = new CrearFacturaUseCase();
 
-        List<DomainEvent> events = UseCaseHandler.getInstance()
-                .syncExecutor(useCase, new RequestCommand<>(command))
-                .orElseThrow()
-                .getDomainEvents();
+        UseCaseHandler.getInstance()
+                .asyncExecutor(useCase, new RequestCommand<>(command))
+                .subscribe(subscriber);
 
-        FacturaCreada facturaCreada = (FacturaCreada) events.get(0);
+        Thread.sleep(800);
+        verify(subscriber, times(1)).onNext(eventCaptor.capture());
+
+        FacturaCreada facturaCreada = (FacturaCreada) eventCaptor.getAllValues().get(0);
 
         Assertions.assertTrue(Objects.nonNull(facturaCreada.getClass()));
         Assertions.assertEquals("1", facturaCreada.aggregateRootId());

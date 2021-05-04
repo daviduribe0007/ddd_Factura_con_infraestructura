@@ -2,7 +2,6 @@ package co.com.softka.softkau.tengohambrerestaurantbar.usecase;
 
 import co.com.sofka.business.generic.BusinessException;
 import co.com.sofka.business.generic.UseCaseHandler;
-import co.com.sofka.business.repository.DomainEventRepository;
 import co.com.sofka.business.support.RequestCommand;
 import co.com.sofka.domain.generic.DomainEvent;
 import co.com.softka.softkau.tengohambrerestaurantbar.domain.factura.commands.AdicionarProducto;
@@ -11,23 +10,15 @@ import co.com.softka.softkau.tengohambrerestaurantbar.domain.factura.events.Prod
 import co.com.softka.softkau.tengohambrerestaurantbar.domain.factura.values.*;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.Mock;
-import org.mockito.Mockito;
-import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.util.List;
 
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
-@ExtendWith(MockitoExtension.class)
-class AdicionarProductoUseCaseTest {
-
-    @Mock
-    private DomainEventRepository repository;
+class AdicionarProductoUseCaseTest extends UseCaseHandleBaseTest{
 
     @Test
-    void ingresarProducto() {
+    void ingresarProducto () throws InterruptedException {
         var facturaId = FacturaId.of("1");
         var fecha = new Fecha("2021,04,28");
         var productoId = ProductoId.of("11");
@@ -39,15 +30,15 @@ class AdicionarProductoUseCaseTest {
         when(repository.getEventsBy(facturaId.value())).thenReturn(eventStored(facturaId, fecha));
         useCase.addRepository(repository);
 
-        var events = UseCaseHandler.getInstance()
+        UseCaseHandler.getInstance()
                 .setIdentifyExecutor(facturaId.value())
-                .syncExecutor(useCase, new RequestCommand<>(command))
-                .orElseThrow()
-                .getDomainEvents();
+                .asyncExecutor(useCase, new RequestCommand<>(command))
+                .subscribe(subscriber);
+        Thread.sleep(800);
+        verify(subscriber,times(2)).onNext(eventCaptor.capture());
+        var event = (ProductoAdicionado) eventCaptor.getAllValues().get(0);
 
-        var event = (ProductoAdicionado) events.get(0);
-
-        Mockito.verify(repository).getEventsBy(facturaId.value());
+        verify(repository).getEventsBy(facturaId.value());
         Assertions.assertEquals("11", event.getProductoId().value());
         Assertions.assertEquals("Sancocho trifasico", event.getDescripcion().value());
         Assertions.assertEquals(35000, event.getPrecio().value());

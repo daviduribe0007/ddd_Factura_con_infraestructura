@@ -22,16 +22,13 @@ import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.util.List;
 
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
-@ExtendWith(MockitoExtension.class)
-class RemoverProductoUseCaseTest {
+class RemoverProductoUseCaseTest extends UseCaseHandleBaseTest {
 
-    @Mock
-    private DomainEventRepository repository;
 
     @Test
-    void removerProducto() {
+    void removerProducto() throws InterruptedException {
         var facturaId = FacturaId.of("1");
         var fecha = new Fecha("2021,04,28");
         var productoId = ProductoId.of("11");
@@ -41,13 +38,16 @@ class RemoverProductoUseCaseTest {
         when(repository.getEventsBy(facturaId.value())).thenReturn(eventStored(facturaId, fecha, productoId));
         useCase.addRepository(repository);
 
-        var events = UseCaseHandler.getInstance()
+        UseCaseHandler.getInstance()
                 .setIdentifyExecutor(facturaId.value())
-                .syncExecutor(useCase, new RequestCommand<>(command))
-                .orElseThrow()
-                .getDomainEvents();
+                .asyncExecutor(useCase, new RequestCommand<>(command))
+                .subscribe(subscriber);
 
-        var event = (ProductoRemovido) events.get(0);
+        Thread.sleep(800);
+        verify(subscriber, times(2)).onNext(eventCaptor.capture());
+
+
+        var event = (ProductoRemovido) eventCaptor.getAllValues().get(0);
 
         Mockito.verify(repository).getEventsBy(facturaId.value());
         Assertions.assertEquals("11", event.getProductoId().value());

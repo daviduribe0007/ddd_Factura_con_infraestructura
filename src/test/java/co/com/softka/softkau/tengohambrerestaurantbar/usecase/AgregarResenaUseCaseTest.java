@@ -1,7 +1,6 @@
 package co.com.softka.softkau.tengohambrerestaurantbar.usecase;
 
 import co.com.sofka.business.generic.UseCaseHandler;
-import co.com.sofka.business.repository.DomainEventRepository;
 import co.com.sofka.business.support.RequestCommand;
 import co.com.sofka.domain.generic.DomainEvent;
 import co.com.softka.softkau.tengohambrerestaurantbar.domain.factura.commands.AgregarResena;
@@ -12,23 +11,16 @@ import co.com.softka.softkau.tengohambrerestaurantbar.domain.factura.values.Fech
 import co.com.softka.softkau.tengohambrerestaurantbar.domain.factura.values.Resena;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.Mock;
-import org.mockito.Mockito;
-import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.util.List;
 
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
-@ExtendWith(MockitoExtension.class)
-class AgregarResenaUseCaseTest {
+class AgregarResenaUseCaseTest extends  UseCaseHandleBaseTest{
 
-    @Mock
-    private DomainEventRepository repository;
 
     @Test
-    void agregarResena() {
+    void agregarResena() throws InterruptedException {
         var facturaId = FacturaId.of("1");
         var fecha = new Fecha("2021,04,28");
         var resena = new Resena("Muy buena la comida pero demorada");
@@ -38,15 +30,17 @@ class AgregarResenaUseCaseTest {
         when(repository.getEventsBy(facturaId.value())).thenReturn(eventStored(facturaId, fecha));
         useCase.addRepository(repository);
 
-        var events = UseCaseHandler.getInstance()
+        UseCaseHandler.getInstance()
                 .setIdentifyExecutor(facturaId.value())
-                .syncExecutor(useCase, new RequestCommand<>(command))
-                .orElseThrow()
-                .getDomainEvents();
+                .asyncExecutor(useCase, new RequestCommand<>(command))
+                .subscribe(subscriber);
 
-        var event = (ResenaAgregada) events.get(0);
+        Thread.sleep(800);
+        verify(subscriber,times(1)).onNext(eventCaptor.capture());
 
-        Mockito.verify(repository).getEventsBy(facturaId.value());
+        var event = (ResenaAgregada) eventCaptor.getAllValues().get(0);
+
+        verify(repository).getEventsBy(facturaId.value());
         Assertions.assertEquals("Muy buena la comida pero demorada", event.getResena().value());
     }
 

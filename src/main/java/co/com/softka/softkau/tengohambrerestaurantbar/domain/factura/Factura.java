@@ -1,5 +1,6 @@
 package co.com.softka.softkau.tengohambrerestaurantbar.domain.factura;
 
+
 import co.com.sofka.domain.generic.AggregateEvent;
 import co.com.sofka.domain.generic.DomainEvent;
 import co.com.softka.softkau.tengohambrerestaurantbar.domain.factura.events.CamareroIngresado;
@@ -24,6 +25,7 @@ import co.com.softka.softkau.tengohambrerestaurantbar.domain.factura.values.Nomb
 import co.com.softka.softkau.tengohambrerestaurantbar.domain.factura.values.ProductoId;
 import co.com.softka.softkau.tengohambrerestaurantbar.domain.factura.values.Resena;
 import co.com.softka.softkau.tengohambrerestaurantbar.domain.factura.values.Sector;
+
 
 import java.util.List;
 import java.util.Map;
@@ -66,14 +68,14 @@ public class Factura extends AggregateEvent<FacturaId> {
     }
 
     public void adicionarProducto(ProductoId productoId, Descripcion descripcion, Dinero precio) {
-        appendChange(new ProductoAdicionado(productoId, descripcion, precio));
-        appendChange(new SubtotalModificado(subtotal.sumar(precio.value())));
+        appendChange(new ProductoAdicionado(productoId, descripcion, precio)).apply();
+        appendChange(new SubtotalModificado(subtotal.sumar(precio.value()))).apply();
     }
 
     public void retirarProducto(ProductoId productoId) {
         var producto = productos.get(productoId);
-        appendChange(new ProductoRemovido(productoId));
-        appendChange(new SubtotalModificado(subtotal.restar(producto.precio().value())));
+        appendChange(new ProductoRemovido(productoId)).apply();
+        appendChange(new SubtotalModificado(subtotal.restar(producto.precio().value()))).apply();
     }
 
     public void agregarResena(Resena resena) {

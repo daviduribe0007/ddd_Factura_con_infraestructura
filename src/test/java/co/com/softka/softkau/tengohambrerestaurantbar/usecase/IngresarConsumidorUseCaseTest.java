@@ -1,7 +1,6 @@
 package co.com.softka.softkau.tengohambrerestaurantbar.usecase;
 
 import co.com.sofka.business.generic.UseCaseHandler;
-import co.com.sofka.business.repository.DomainEventRepository;
 import co.com.sofka.business.support.RequestCommand;
 import co.com.sofka.domain.generic.DomainEvent;
 import co.com.softka.softkau.tengohambrerestaurantbar.domain.factura.commands.IngresarConsumidor;
@@ -15,23 +14,16 @@ import co.com.softka.softkau.tengohambrerestaurantbar.domain.factura.values.Celu
 import co.com.softka.softkau.tengohambrerestaurantbar.domain.factura.values.Correo;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.Mock;
 import org.mockito.Mockito;
-import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.util.List;
 
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
-@ExtendWith(MockitoExtension.class)
-class IngresarConsumidorUseCaseTest {
-
-    @Mock
-    private DomainEventRepository repository;
+class IngresarConsumidorUseCaseTest extends UseCaseHandleBaseTest{
 
     @Test
-    void ingresarConsumidor() {
+    void ingresarConsumidor() throws InterruptedException {
         var facturaId = FacturaId.of("1");
         var fecha = new Fecha("2021,04,28");
         var consumidorId = ConsumidorId.of("123456789");
@@ -44,13 +36,16 @@ class IngresarConsumidorUseCaseTest {
         when(repository.getEventsBy(facturaId.value())).thenReturn(eventStored(facturaId, fecha));
         useCase.addRepository(repository);
 
-        var events = UseCaseHandler.getInstance()
+        UseCaseHandler.getInstance()
                 .setIdentifyExecutor(facturaId.value())
-                .syncExecutor(useCase, new RequestCommand<>(command))
-                .orElseThrow()
-                .getDomainEvents();
+                .asyncExecutor(useCase, new RequestCommand<>(command))
+                .subscribe(subscriber);
 
-        var event = (ConsumidorIngresado) events.get(0);
+        Thread.sleep(800);
+        verify(subscriber, times(1)).onNext(eventCaptor.capture());
+
+
+        var event = (ConsumidorIngresado) eventCaptor.getAllValues().get(0);
 
         Mockito.verify(repository).getEventsBy(facturaId.value());
         Assertions.assertEquals("123456789", event.getConsumidorId().value());

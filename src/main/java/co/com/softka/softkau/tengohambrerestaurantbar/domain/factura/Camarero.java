@@ -19,7 +19,7 @@ public class Camarero extends Entity<CamareroId> {
         return nombre;
     }
 
-    public Sector getSector() {
+    public Sector sector() {
         return sector;
     }
 

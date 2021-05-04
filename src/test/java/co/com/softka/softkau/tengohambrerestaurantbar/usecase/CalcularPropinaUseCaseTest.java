@@ -24,16 +24,13 @@ import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.util.List;
 
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
-@ExtendWith(MockitoExtension.class)
-class CalcularPropinaUseCaseTest {
+class CalcularPropinaUseCaseTest extends UseCaseHandleBaseTest{
 
-    @Mock
-    private DomainEventRepository repository;
 
     @Test
-    void calcularPropina() {
+    void calcularPropina() throws InterruptedException {
         var resena = new Resena("Muy bueno todo");
         var event = new ResenaAgregada(resena);
         var useCase = new CalcularPropinaUseCase();
@@ -43,13 +40,15 @@ class CalcularPropinaUseCaseTest {
         when(repository.getEventsBy(event.aggregateRootId())).thenReturn(eventStored(resena));
         useCase.addRepository(repository);
 
-        var events = UseCaseHandler.getInstance()
+         UseCaseHandler.getInstance()
                 .setIdentifyExecutor(event.aggregateRootId())
-                .syncExecutor(useCase, new TriggeredEvent<>(event))
-                .orElseThrow()
-                .getDomainEvents();
+                .asyncExecutor(useCase, new TriggeredEvent<>(event))
+                 .subscribe(subscriber);
 
-        var propinacalculada = (PropinaCalculada) events.get(0);
+        Thread.sleep(800);
+        verify(subscriber,times(1)).onNext(eventCaptor.capture());
+
+        var propinacalculada = (PropinaCalculada) eventCaptor.getAllValues().get(0);
 
         Assertions.assertEquals(1750, propinacalculada.getPropina().value());
     }
