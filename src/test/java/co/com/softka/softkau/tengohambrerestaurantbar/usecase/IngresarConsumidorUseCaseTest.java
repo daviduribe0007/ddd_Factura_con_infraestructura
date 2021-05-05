@@ -12,6 +12,7 @@ import co.com.softka.softkau.tengohambrerestaurantbar.domain.factura.values.Cons
 import co.com.softka.softkau.tengohambrerestaurantbar.domain.factura.values.Nombre;
 import co.com.softka.softkau.tengohambrerestaurantbar.domain.factura.values.Celular;
 import co.com.softka.softkau.tengohambrerestaurantbar.domain.factura.values.Correo;
+import co.com.softka.softkau.tengohambrerestaurantbar.usecase.factura.IngresarConsumidorUseCase;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;

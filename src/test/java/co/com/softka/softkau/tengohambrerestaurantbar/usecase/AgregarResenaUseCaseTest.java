@@ -9,6 +9,7 @@ import co.com.softka.softkau.tengohambrerestaurantbar.domain.factura.events.Rese
 import co.com.softka.softkau.tengohambrerestaurantbar.domain.factura.values.FacturaId;
 import co.com.softka.softkau.tengohambrerestaurantbar.domain.factura.values.Fecha;
 import co.com.softka.softkau.tengohambrerestaurantbar.domain.factura.values.Resena;
+import co.com.softka.softkau.tengohambrerestaurantbar.usecase.factura.AgregarResenaUseCase;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 

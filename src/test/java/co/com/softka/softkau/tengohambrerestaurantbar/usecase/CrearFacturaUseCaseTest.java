@@ -2,15 +2,14 @@ package co.com.softka.softkau.tengohambrerestaurantbar.usecase;
 
 import co.com.sofka.business.generic.UseCaseHandler;
 import co.com.sofka.business.support.RequestCommand;
-import co.com.sofka.domain.generic.DomainEvent;
 import co.com.softka.softkau.tengohambrerestaurantbar.domain.factura.commands.CrearFactura;
 import co.com.softka.softkau.tengohambrerestaurantbar.domain.factura.events.FacturaCreada;
 import co.com.softka.softkau.tengohambrerestaurantbar.domain.factura.values.FacturaId;
 import co.com.softka.softkau.tengohambrerestaurantbar.domain.factura.values.Fecha;
+import co.com.softka.softkau.tengohambrerestaurantbar.usecase.factura.CrearFacturaUseCase;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
-import java.util.List;
 import java.util.Objects;
 
 import static org.mockito.Mockito.times;

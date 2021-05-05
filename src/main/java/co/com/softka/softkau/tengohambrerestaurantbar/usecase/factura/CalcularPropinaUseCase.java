@@ -1,4 +1,4 @@
-package co.com.softka.softkau.tengohambrerestaurantbar.usecase;
+package co.com.softka.softkau.tengohambrerestaurantbar.usecase.factura;
 
 import co.com.sofka.business.generic.BusinessException;
 import co.com.sofka.business.generic.UseCase;

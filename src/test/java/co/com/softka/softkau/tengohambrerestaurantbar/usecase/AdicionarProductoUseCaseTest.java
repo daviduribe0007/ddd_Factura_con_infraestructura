@@ -8,6 +8,7 @@ import co.com.softka.softkau.tengohambrerestaurantbar.domain.factura.commands.Ad
 import co.com.softka.softkau.tengohambrerestaurantbar.domain.factura.events.FacturaCreada;
 import co.com.softka.softkau.tengohambrerestaurantbar.domain.factura.events.ProductoAdicionado;
 import co.com.softka.softkau.tengohambrerestaurantbar.domain.factura.values.*;
+import co.com.softka.softkau.tengohambrerestaurantbar.usecase.factura.AdicionarProductoUseCase;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 

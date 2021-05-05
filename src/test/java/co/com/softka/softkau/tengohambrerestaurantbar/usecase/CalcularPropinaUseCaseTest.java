@@ -2,7 +2,6 @@ package co.com.softka.softkau.tengohambrerestaurantbar.usecase;
 
 
 import co.com.sofka.business.generic.UseCaseHandler;
-import co.com.sofka.business.repository.DomainEventRepository;
 import co.com.sofka.business.support.TriggeredEvent;
 import co.com.sofka.domain.generic.DomainEvent;
 import co.com.softka.softkau.tengohambrerestaurantbar.domain.factura.events.ResenaAgregada;
@@ -16,11 +15,9 @@ import co.com.softka.softkau.tengohambrerestaurantbar.domain.factura.values.Fech
 import co.com.softka.softkau.tengohambrerestaurantbar.domain.factura.values.ProductoId;
 import co.com.softka.softkau.tengohambrerestaurantbar.domain.factura.values.Descripcion;
 import co.com.softka.softkau.tengohambrerestaurantbar.domain.factura.values.Dinero;
+import co.com.softka.softkau.tengohambrerestaurantbar.usecase.factura.CalcularPropinaUseCase;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.Mock;
-import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.util.List;
 
