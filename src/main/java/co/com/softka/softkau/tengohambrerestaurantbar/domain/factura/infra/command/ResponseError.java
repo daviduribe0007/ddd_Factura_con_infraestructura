@@ -1,4 +1,4 @@
-package co.com.softka.softkau.tengohambrerestaurantbar.domain.factura.infra.config;
+package co.com.softka.softkau.tengohambrerestaurantbar.domain.factura.infra.command;
 
 public class ResponseError {
     private final int status;

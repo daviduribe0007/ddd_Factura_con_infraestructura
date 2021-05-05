@@ -1,4 +1,4 @@
-package co.com.softka.softkau.tengohambrerestaurantbar.domain.factura.infra.config;
+package co.com.softka.softkau.tengohambrerestaurantbar.domain.factura.infra.command;
 
 import co.com.sofka.application.ApplicationCommandExecutor;
 import org.springframework.beans.factory.annotation.Autowired;

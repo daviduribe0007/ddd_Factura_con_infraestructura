@@ -12,14 +12,16 @@ import org.springframework.amqp.rabbit.connection.CachingConnectionFactory;
 import org.springframework.amqp.rabbit.core.RabbitAdmin;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Service;
 
 import java.net.URI;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+@Service
 public class RabbitMQEventBus implements EventBus {
     private static final String EXCHANGE = "core-tengohambrerestaurantbar";
-    private static final String TOPIC_BUSINESS_ERROR = "co.com.softka.doftkau.tengohambrerestaurantbar.business.error";
+    private static final String TOPIC_BUSINESS_ERROR = "co.com.softka.softkau.tengohambrerestaurantbar.business.error";
     private static final Logger logger = Logger.getLogger(RabbitMQEventBus.class.getName());
     private final RabbitTemplate rabbitTemplate;
     private final RabbitAdmin rabbitAdmin;
