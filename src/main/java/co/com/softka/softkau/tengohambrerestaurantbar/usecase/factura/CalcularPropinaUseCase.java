@@ -10,7 +10,7 @@ import co.com.softka.softkau.tengohambrerestaurantbar.domain.factura.events.Rese
 import co.com.softka.softkau.tengohambrerestaurantbar.domain.factura.values.Dinero;
 import co.com.softka.softkau.tengohambrerestaurantbar.domain.factura.values.FacturaId;
 
-@EventListener(eventType = "tengohambrerestaurantbar.factura.calcularpropina")
+@EventListener(eventType = "tengohambrerestaurantbar.factura.resenaagregada")
 public class CalcularPropinaUseCase extends UseCase<TriggeredEvent<ResenaAgregada>, ResponseEvents> {
     @Override
     public void executeUseCase(TriggeredEvent<ResenaAgregada> resenaAgregadaTriggeredEvent) {

@@ -1,4 +1,4 @@
-package co.com.softka.softkau.tengohambrerestaurantbar.usecase.factura.handle;
+package co.com.softka.softkau.tengohambrerestaurantbar.usecase.factura.handles;
 
 import co.com.sofka.business.annotation.CommandHandles;
 import co.com.sofka.business.annotation.CommandType;
@@ -15,7 +15,7 @@ import java.util.Map;
 import java.util.Objects;
 
 @CommandHandles
-@CommandType(name = "tengohambrerestaurantbar.factura.ingresarcamarero", aggregate = "factura")
+@CommandType(name = "tengohambrerestaurantbar.factura.camareroingresado", aggregate = "factura")
 public class IngresarCamareroHandle  extends UseCaseExecutor {
     private RequestCommand<IngresarCamarero> request;
 

@@ -1,4 +1,4 @@
-package co.com.softka.softkau.tengohambrerestaurantbar.usecase.factura.handle;
+package co.com.softka.softkau.tengohambrerestaurantbar.usecase.factura.handles;
 
 import co.com.sofka.business.annotation.CommandHandles;
 import co.com.sofka.business.annotation.CommandType;
