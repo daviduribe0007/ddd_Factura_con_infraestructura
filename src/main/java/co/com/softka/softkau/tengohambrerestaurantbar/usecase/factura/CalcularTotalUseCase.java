@@ -1,5 +1,6 @@
 package co.com.softka.softkau.tengohambrerestaurantbar.usecase.factura;
 
+import co.com.sofka.business.annotation.EventListener;
 import co.com.sofka.business.generic.BusinessException;
 import co.com.sofka.business.generic.UseCase;
 import co.com.sofka.business.support.ResponseEvents;
@@ -9,6 +10,7 @@ import co.com.softka.softkau.tengohambrerestaurantbar.domain.factura.events.Prop
 import co.com.softka.softkau.tengohambrerestaurantbar.domain.factura.values.Dinero;
 import co.com.softka.softkau.tengohambrerestaurantbar.domain.factura.values.FacturaId;
 
+@EventListener(eventType = "tengohambrerestaurantbar.factura.calculartotal")
 public class CalcularTotalUseCase extends UseCase<TriggeredEvent<PropinaCalculada>, ResponseEvents> {
     @Override
     public void executeUseCase(TriggeredEvent<PropinaCalculada> propinaCalculadaTriggeredEvent) {
