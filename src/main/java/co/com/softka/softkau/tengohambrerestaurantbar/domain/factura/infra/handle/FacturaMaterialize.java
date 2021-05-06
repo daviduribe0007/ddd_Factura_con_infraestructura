@@ -1,9 +1,7 @@
 package co.com.softka.softkau.tengohambrerestaurantbar.domain.factura.infra.handle;
 
 import co.com.sofka.domain.generic.DomainEvent;
-import co.com.softka.softkau.tengohambrerestaurantbar.domain.factura.events.CamareroIngresado;
-import co.com.softka.softkau.tengohambrerestaurantbar.domain.factura.events.ConsumidorIngresado;
-import co.com.softka.softkau.tengohambrerestaurantbar.domain.factura.events.FacturaCreada;
+import co.com.softka.softkau.tengohambrerestaurantbar.domain.factura.events.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.event.EventListener;
@@ -61,6 +59,26 @@ public class FacturaMaterialize {
         update.set("consumidor."+id+".correo", consumidorIngresado.getCorreo().value());
 
         mongoTemplate.updateFirst(getFilterByAggregateId(consumidorIngresado), update, COLLECTION_NAME);
+    }
+
+    @Async
+    @EventListener
+    public void handleEventProductoAdicionado(ProductoAdicionado productoAdicionado) {
+        logger.info("****** Handle event consumidorIngresado");
+        Update update = new Update();
+        var id = productoAdicionado.getProductoId().value();
+        update.set("producto."+id+".descripcion", productoAdicionado.getDescripcion().value());
+        update.set("producto."+id+".precio", productoAdicionado.getPrecio().value());
+        mongoTemplate.updateFirst(getFilterByAggregateId(productoAdicionado), update, COLLECTION_NAME);
+    }
+
+    @Async
+    @EventListener
+    public void handleEventSubtotalModificado(SubtotalModificado subtotalModificado) {
+        logger.info("****** Handle event subtotal modificado");
+        Update update2 = new Update();
+        update2.set("subtotal", subtotalModificado.getSubtotal().value());
+        mongoTemplate.updateFirst(getFilterByAggregateId(subtotalModificado), update2, COLLECTION_NAME);
     }
 
     private Query getFilterByAggregateId(DomainEvent event) {
