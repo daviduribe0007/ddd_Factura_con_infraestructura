@@ -5,15 +5,15 @@ import co.com.softka.softkau.tengohambrerestaurantbar.domain.factura.values.Rese
 
 public class ResenaAgregada extends DomainEvent {
 
-    private final Resena reseña;
+    private final Resena resena;
 
     public ResenaAgregada(Resena resena) {
         super("tengohambrerestaurantbar.factura.resenaagregada");
-        this.reseña = resena;
+        this.resena = resena;
     }
 
     public Resena getResena() {
-        return reseña;
+        return resena;
     }
 
 }
