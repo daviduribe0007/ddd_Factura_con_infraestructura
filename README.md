@@ -25,7 +25,7 @@ Agregar reseña Este dispara -> calcular propina este dispara -> Calcular total
 
 para correr el Rabbitmq en docker con el comando (docker run -it --rm --name rabbitmq -p 5672:5672 -p 15672:15672 rabbitmq:3-management)
 para correr el mongo se debe crear en el c:/ una carpeta llamada dockerdata y ejecutar este comando en cmd
-docker (run -d -p 27017:27017 --name mongodb -v c:/dockerdata/mongodata:/data/db mongo) con este comando logramos persistencia
+docker (docker run -d -p 27017:27017 --name mongodb -v c:/dockerdata/mongodata:/data/db mongo) con este comando logramos persistencia
 
 Este programa hace persistencia de eventos y comandos.
 
